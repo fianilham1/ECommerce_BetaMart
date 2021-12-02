@@ -1,6 +1,6 @@
 package com.betamart.service.impl;
 
-import com.betamart.base.constant.CommonMessage;
+import com.betamart.common.constant.CommonMessage;
 import com.betamart.model.User;
 import com.betamart.repository.UserRepository;
 import com.betamart.service.UserService;

@@ -1,13 +1,11 @@
 package com.betamart.service.impl;
 
-import com.betamart.base.constant.CommonMessage;
-import com.betamart.base.payload.response.BaseResponse;
-import com.betamart.base.util.MapperUtil;
+import com.betamart.common.constant.CommonMessage;
+import com.betamart.common.payload.response.BaseResponse;
+import com.betamart.common.util.MapperUtil;
 import com.betamart.model.Product;
 import com.betamart.model.ProductCategory;
-import com.betamart.module.product.payload.request.ProductListRequest;
-import com.betamart.module.product.payload.request.ProductRequest;
-import com.betamart.module.product.payload.response.ProductResponse;
+import com.betamart.model.payloadResponse.ProductResponse;
 import com.betamart.repository.ProductCategoryRepository;
 import com.betamart.repository.ProductRepository;
 import com.betamart.service.ProductService;
@@ -29,11 +27,11 @@ public class ProductServiceImpl implements ProductService {
     ProductCategoryRepository productCategoryRepository;
 
     @Override
-    public BaseResponse<?> addProduct(ProductListRequest productListRequest, String username){
+    public BaseResponse<?> addProduct(List<Product> productListRequest, String username){
         try{
-            productListRequest.getProductList().forEach(productRequest -> {
+            productListRequest.forEach(productRequest -> {
                 Product product = MapperUtil.parse(productRequest, Product.class, MatchingStrategies.STRICT);
-                ProductCategory productCategory = productCategoryRepository.findById(productRequest.getProductCategoryId()).get();
+                ProductCategory productCategory = productCategoryRepository.findById(productRequest.getProductCategory().getId()).get();
 
                 product.setProductCategory(productCategory);
                 product.setReady(true);
@@ -95,22 +93,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public BaseResponse<?> updateProduct (ProductRequest editProductRequest, Long id, String username){
+    public BaseResponse<?> updateProduct (Product updatedProductRequest, Long id, String username){
         try{
             Product product = productRepository.findById(id).get();
-            ProductCategory productCategory = productCategoryRepository.findById(editProductRequest.getProductCategoryId()).get();
+            ProductCategory productCategory = productCategoryRepository.findById(updatedProductRequest.getProductCategory().getId()).get();
 
             product.setProductCategory(productCategory);
-            product.setName(editProductRequest.getName());
-            product.setBrand(editProductRequest.getBrand());
-            product.setQuantityInStock(editProductRequest.getQuantityInStock());
-            product.setCode(editProductRequest.getCode());
-            product.setProductSeries(editProductRequest.getProductSeries());
-            product.setSize(editProductRequest.getSize());
-            product.setNetWeight(editProductRequest.getNetWeight());
-            product.setPrice(editProductRequest.getPrice());
-            product.setImage(editProductRequest.getImage());
-            product.setExpDate(editProductRequest.getExpDate());
+            product.setName(updatedProductRequest.getName());
+            product.setBrand(updatedProductRequest.getBrand());
+            product.setQuantityInStock(updatedProductRequest.getQuantityInStock());
+            product.setCode(updatedProductRequest.getCode());
+            product.setProductSeries(updatedProductRequest.getProductSeries());
+            product.setSize(updatedProductRequest.getSize());
+            product.setNetWeight(updatedProductRequest.getNetWeight());
+            product.setPrice(updatedProductRequest.getPrice());
+            product.setImage(updatedProductRequest.getImage());
+            product.setExpDate(updatedProductRequest.getExpDate());
             product.setUpdatedBy(username);
             product.setUpdatedDate(new Date());
 

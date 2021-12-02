@@ -1,6 +1,6 @@
 package com.betamart.service.impl;
 
-import com.betamart.base.util.HashSaltPasswordUtil;
+import com.betamart.common.util.HashSaltPasswordUtil;
 import com.betamart.model.User;
 import com.betamart.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -52,7 +49,7 @@ public class CustomAuthenticationProviderServiceImpl implements AuthenticationPr
         if(user.getRole().getName().equals("admin")){
             grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
-        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_CUSTOMER"));
         return grantedAuthorities;
     }
 

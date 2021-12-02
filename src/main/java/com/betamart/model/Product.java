@@ -1,6 +1,7 @@
 package com.betamart.model;
 
 import com.betamart.model.auditable.BaseModel;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

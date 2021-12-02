@@ -1,11 +1,12 @@
 package com.betamart.service;
 
-import com.betamart.base.payload.response.BaseResponse;
-import com.betamart.module.product.payload.request.ProductListRequest;
-import com.betamart.module.product.payload.request.ProductRequest;
+import com.betamart.common.payload.response.BaseResponse;
+import com.betamart.model.Product;
+
+import java.util.List;
 
 public interface ProductService {
-    BaseResponse<?> addProduct(ProductListRequest productListRequest, String username);
+    BaseResponse<?> addProduct(List<Product> productListRequest, String username);
 
     BaseResponse<?> getAllProduct();
 
@@ -13,7 +14,7 @@ public interface ProductService {
 
     BaseResponse<?> deleteProduct (Long id, String username);
 
-    BaseResponse<?> updateProduct (ProductRequest editProductRequest, Long id, String username);
+    BaseResponse<?> updateProduct (Product updatedProductRequest, Long id, String username);
 
     BaseResponse<?> updateProductQuantity (int newQuantity, Long id, String username);
 

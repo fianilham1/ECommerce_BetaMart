@@ -1,12 +1,13 @@
 package com.betamart.service;
 
-import com.betamart.base.payload.response.BaseResponse;
-import com.betamart.module.productCategory.payload.request.ProductCategoryListRequest;
-import com.betamart.module.productCategory.payload.request.ProductCategoryRequest;
+import com.betamart.common.payload.response.BaseResponse;
+import com.betamart.model.ProductCategory;
+
+import java.util.List;
 
 public interface ProductCategoryService {
 
-    BaseResponse<?> addAllProductCategory(ProductCategoryListRequest productCategoryListRequest, String username);
+    BaseResponse<?> addAllProductCategory(List<String> productCategoryListRequest, String username);
 
     BaseResponse<?> getAllProductCategory();
 
@@ -14,6 +15,6 @@ public interface ProductCategoryService {
 
     BaseResponse<?> deleteProductCategory (Long id, String username);
 
-    BaseResponse<?> updateProductCategory (ProductCategoryRequest editProductCategoryListRequest, Long id, String username);
+    BaseResponse<?> updateProductCategory (ProductCategory updatedProductCategory, Long id, String username);
 
 }

@@ -1,16 +1,17 @@
 package com.betamart.service;
 
-import com.betamart.base.payload.response.BaseResponse;
-import com.betamart.module.order.payload.request.OrderRequest;
+import com.betamart.common.payload.response.BaseResponse;
+import com.betamart.enumeration.OrderStatusEnum;
+import com.betamart.model.Order;
 
 public interface OrderService {
 
-    BaseResponse<?> addOrderUser(OrderRequest orderRequest, String username);
+    BaseResponse<?> addNewOrderCustomer(Order orderRequest, String username);
 
-    BaseResponse<?> getAllOrderUser(String username);
+    BaseResponse<?> getAllOrderCustomer(String username);
 
-    BaseResponse<?> getOrderUser(String username, Long id);
+    BaseResponse<?> getOrderCustomer(String username, Long id);
 
-    BaseResponse<?> updateOrderStatusUser(Long id, String status, String username);
+    BaseResponse<?> updateOrderStatusCustomer(Long id, OrderStatusEnum orderStatus, String username);
 
 }

@@ -1,20 +1,20 @@
 package com.betamart.service.impl;
 
-import com.betamart.base.constant.CommonMessage;
-import com.betamart.base.payload.response.BaseResponse;
-import com.betamart.base.util.MapperUtil;
+import com.betamart.common.constant.CommonMessage;
+import com.betamart.common.payload.response.BaseResponse;
+import com.betamart.common.util.MapperUtil;
+import com.betamart.enumeration.OrderStatusEnum;
 import com.betamart.model.Order;
-import com.betamart.model.OrderProduct;
+import com.betamart.model.OrderProductDetails;
 import com.betamart.model.Product;
-import com.betamart.module.order.payload.request.OrderProductRequest;
-import com.betamart.module.order.payload.request.OrderRequest;
-import com.betamart.module.order.payload.response.OrderProductResponse;
-import com.betamart.module.order.payload.response.OrderResponse;
+import com.betamart.model.User;
+import com.betamart.model.payloadResponse.OrderProductDetailsResponse;
+import com.betamart.model.payloadResponse.OrderResponse;
 import com.betamart.repository.OrderProductRepository;
 import com.betamart.repository.OrderRepository;
 import com.betamart.repository.ProductRepository;
+import com.betamart.repository.UserRepository;
 import com.betamart.service.OrderService;
-import org.aspectj.weaver.ast.Or;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,58 +32,75 @@ public class OrderServiceImpl implements OrderService {
     OrderRepository orderRepository;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     ProductRepository productRepository;
 
     @Autowired
     OrderProductRepository orderProductRepository;
 
     @Override
-    public BaseResponse<?> addOrderUser(OrderRequest orderRequest, String username){
+    public BaseResponse<?> addNewOrderCustomer(Order orderRequest, String username){
         try{
             Order order = new Order();
-            order.setStatus("waiting_payment");
+            order.setOrderStatus(OrderStatusEnum.PENDING_PAYMENT);
             order.setCreatedBy(username);
             order.setCreatedDate(new Date());
+            order.setCustomerNote(orderRequest.getCustomerNote());
+            User user = userRepository.findByUsername(username);
+            order.setUser(user);
+
             orderRepository.save(order);
 
             //check quantity per product FIRST in Order >>>>
-            for (OrderProductRequest orderProductRequest : orderRequest.getOrderProductRequestList()){
-                Product product = productRepository.findById(orderProductRequest.getProductId()).get();
-                int newQuantity = product.getQuantityInStock()-orderProductRequest.getProductQuantity();
+            for (OrderProductDetails orderProductDetails : orderRequest.getOrderProductDetailsList()){
+                Product product = productRepository.findById(orderProductDetails.getProduct().getId()).get();
+                int newQuantity = product.getQuantityInStock() - orderProductDetails.getProductQuantity();
                 if(newQuantity<0){
                     return new BaseResponse<>(CommonMessage.ORDER_OUT);
                 }
-
             }
 
-            AtomicReference<Long> totalPrice = new AtomicReference<>(0L);
+            AtomicReference<Long> totalProductsPrice = new AtomicReference<>(0L);
             AtomicInteger totalQuantity = new AtomicInteger();
-            List<OrderProduct> orderProductList = new ArrayList<>();
+            List<OrderProductDetails> orderProductDetailsList = new ArrayList<>();
 
             System.out.println("Quantity Per Product OK........");
-            orderRequest.getOrderProductRequestList().forEach(orderProductRequest -> {
-                Product product = productRepository.findById(orderProductRequest.getProductId()).get();
-                OrderProduct orderProduct = new OrderProduct();
-                orderProduct.setOrder(order);
-                orderProduct.setProduct(product);
-                orderProduct.setProductQuantity(orderProductRequest.getProductQuantity());
-                orderProduct.setProductPrice(product.getPrice()*orderProductRequest.getProductQuantity());
-                orderProduct.setCreatedBy(username);
-                orderProduct.setCreatedDate(new Date());
-                orderProductRepository.save(orderProduct);
+            System.out.println("cek qty "+ orderRequest);
+            orderRequest.getOrderProductDetailsList().forEach(orderProductDetailsRequest -> {
+                Product product = productRepository.findById(orderProductDetailsRequest.getProduct().getId()).get();
+                OrderProductDetails orderProductDetails = new OrderProductDetails();
+                orderProductDetails.setOrder(order);
+                orderProductDetails.setProduct(product);
+                orderProductDetails.setProductQuantity(orderProductDetailsRequest.getProductQuantity());
+                orderProductDetails.setProductPrice(product.getPrice()* orderProductDetailsRequest.getProductQuantity());
+                orderProductDetails.setCreatedBy(username);
+                orderProductDetails.setCreatedDate(new Date());
+                orderProductRepository.save(orderProductDetails);
 
-                orderProductList.add(orderProduct);
-                totalPrice.set(totalPrice.get() + orderProduct.getProductPrice());
-                totalQuantity.addAndGet(orderProduct.getProductQuantity());
+                orderProductDetailsList.add(orderProductDetails);
+                totalProductsPrice.set(totalProductsPrice.get() + orderProductDetails.getProductPrice());
+                totalQuantity.addAndGet(orderProductDetails.getProductQuantity());
 
                 //update inStock Quantity Product
-                int newQuantity = product.getQuantityInStock()-orderProductRequest.getProductQuantity();
+                int newQuantity = product.getQuantityInStock()- orderProductDetailsRequest.getProductQuantity();
                 product.setQuantityInStock(newQuantity);
                 productRepository.save(product);
             });
 
-            order.setTotalPrice(totalPrice.get());
-            order.setTotalQuantity(totalQuantity.get());
+            //add shipping detail
+            order.setShippingServiceId(1);
+            order.setShippingServiceName("TIKI");
+            order.setOrderDestinationLocationDetails(orderRequest.getOrderDestinationLocationDetails());
+
+            int shippingPrice = 10000;
+            order.setShippingPrice(shippingPrice);
+
+            //re-calculate the price of order
+            order.setTotalProductsPrice(totalProductsPrice.get());
+            order.setTotalPrice(totalProductsPrice.get()+shippingPrice);
+            order.setTotalAllQuantity(totalQuantity.get());
             orderRepository.save(order); //update total price and total qty
 
             return new BaseResponse<>(CommonMessage.ORDER_OK, "Success");
@@ -94,22 +111,22 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public BaseResponse<?> getAllOrderUser(String username){
+    public BaseResponse<?> getAllOrderCustomer(String username){
         try{
             List<Order> orderList = orderRepository.findByCreatedBy(username);
             List<OrderResponse> orderResponseList = new ArrayList<>();
             orderList.forEach(order -> {
-                List<OrderProduct> orderProductList = order.getOrderProductList();
-                List<OrderProductResponse> orderProductResponseList = new ArrayList<>();
-                orderProductList.forEach(orderProduct -> {
-                    OrderProductResponse orderProductResponse = MapperUtil.parse(orderProduct.getProduct(), OrderProductResponse.class, MatchingStrategies.STRICT);
-                    orderProductResponse.setProductPrice(orderProduct.getProductPrice());
-                    orderProductResponse.setProductQuantity(orderProduct.getProductQuantity());
-                    orderProductResponseList.add(orderProductResponse);
+                List<OrderProductDetails> orderProductDetailsList = order.getOrderProductDetailsList();
+                List<OrderProductDetailsResponse> orderProductDetailsResponseList = new ArrayList<>();
+                orderProductDetailsList.forEach(orderProductDetails -> {
+                    OrderProductDetailsResponse orderProductDetailsResponse = MapperUtil.parse(orderProductDetails.getProduct(), OrderProductDetailsResponse.class, MatchingStrategies.STRICT);
+                    orderProductDetailsResponse.setProductPrice(orderProductDetails.getProductPrice());
+                    orderProductDetailsResponse.setProductQuantity(orderProductDetails.getProductQuantity());
+                    orderProductDetailsResponseList.add(orderProductDetailsResponse);
                 });
 
                 OrderResponse orderResponse = MapperUtil.parse(order, OrderResponse.class, MatchingStrategies.STRICT);
-                orderResponse.setOrderProductResponseList(orderProductResponseList);
+                orderResponse.setOrderProductDetailsResponseList(orderProductDetailsResponseList);
                 orderResponseList.add(orderResponse);
             });
             return new BaseResponse<>(CommonMessage.FOUND, orderResponseList);
@@ -120,7 +137,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public BaseResponse<?> getOrderUser(String username, Long id){
+    public BaseResponse<?> getOrderCustomer(String username, Long id){
         try{
             Order order = orderRepository.findByCreatedByAndId(username, id);
             OrderResponse orderResponse = MapperUtil.parse(order, OrderResponse.class, MatchingStrategies.STRICT);
@@ -133,10 +150,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public BaseResponse<?> updateOrderStatusUser(Long id, String status, String username) {
+    public BaseResponse<?> updateOrderStatusCustomer(Long id, OrderStatusEnum orderStatus, String username) {
         try{
             Order order = orderRepository.findByCreatedByAndId(username, id);
-            order.setStatus(status);
+            order.setOrderStatus(orderStatus);
             orderRepository.save(order);
             return new BaseResponse<>(CommonMessage.UPDATED, "Success");
         }catch (Exception e){

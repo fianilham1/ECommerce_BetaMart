@@ -1,12 +1,12 @@
 package com.betamart.model;
 
 import com.betamart.model.auditable.BaseModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -16,13 +16,14 @@ public class Cart extends BaseModel {
 
     //id -> cart Id
 
-    @Column(name = "order_id", nullable = false)
-    private long orderID;
+    @ManyToOne
+    @JoinColumn(name = "fk_user_id", nullable = false)
+    private User user;
 
-    @Column(name = "total_price", nullable = false)
-    private long totalPrice;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="cart", cascade = CascadeType.ALL)
+    private List<CartProductDetails> cartProductDetailsList;
 
-    @Column(name = "quantity_product", nullable = false)
-    private int quantityProduct;
+    @Column(name = "total_products_price", nullable = false)
+    private long totalProductsPrice;
 
 }

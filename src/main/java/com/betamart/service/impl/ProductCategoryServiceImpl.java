@@ -1,13 +1,11 @@
 package com.betamart.service.impl;
 
-import com.betamart.base.constant.CommonMessage;
-import com.betamart.base.payload.response.BaseResponse;
-import com.betamart.base.util.JwtUtil;
-import com.betamart.base.util.MapperUtil;
+import com.betamart.common.constant.CommonMessage;
+import com.betamart.common.payload.response.BaseResponse;
+import com.betamart.common.util.JwtUtil;
+import com.betamart.common.util.MapperUtil;
 import com.betamart.model.ProductCategory;
-import com.betamart.module.productCategory.payload.request.ProductCategoryListRequest;
-import com.betamart.module.productCategory.payload.request.ProductCategoryRequest;
-import com.betamart.module.productCategory.payload.response.ProductCategoryResponse;
+import com.betamart.model.payloadResponse.ProductCategoryResponse;
 import com.betamart.repository.ProductCategoryRepository;
 import com.betamart.service.ProductCategoryService;
 import org.modelmapper.convention.MatchingStrategies;
@@ -29,10 +27,10 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     private JwtUtil jwtUtil;
 
     @Override
-    public BaseResponse<?> addAllProductCategory(ProductCategoryListRequest productCategoryListRequest, String username){
+    public BaseResponse<?> addAllProductCategory(List<String> productCategoryListRequest, String username){
         try{
             AtomicBoolean doesExistAll = new AtomicBoolean(true);
-            productCategoryListRequest.getNameList().forEach(name->{
+            productCategoryListRequest.forEach(name->{
                 if(!productCategoryRepository.existsByName(name)){
                     ProductCategory productCategory = new ProductCategory();
                     productCategory.setName(name);
@@ -98,10 +96,10 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     @Override
-    public BaseResponse<?> updateProductCategory (ProductCategoryRequest editProductCategoryListRequest, Long id, String username) {
+    public BaseResponse<?> updateProductCategory (ProductCategory updatedProductCategory, Long id, String username) {
         try{
             ProductCategory productCategory = productCategoryRepository.findById(id).get();
-            productCategory.setName(editProductCategoryListRequest.getName());
+            productCategory.setName(updatedProductCategory.getName());
             productCategory.setUpdatedBy(username);
             productCategory.setUpdatedDate(new Date());
             productCategoryRepository.save(productCategory);
