@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"role_name_list\":[\r\n        \"admin\",\r\n        \"user\"\r\n    ]\r\n}",
+					"raw": "[\r\n    \"admin\",\r\n    \"customer\"\r\n]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -41,7 +41,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\"  : \"fian1@gmail.com\",\r\n    \"password\"  : \"Fian123@\",\r\n    \"role_id\"   : 1\r\n}",
+					"raw": "{\r\n    \"username\"  : \"fian1@gmail.com\",\r\n    \"password\"  : \"Fian123@\",\r\n    \"role\"   : {\r\n        \"id\":1\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -160,13 +160,13 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmaWFuMUBnbWFpbC5jb20iLCJleHAiOjE2MzcwNDQ4MzMsImlhdCI6MTYzNzAzNzYzM30.5z8-0qdTLYmy6PF0asRmEyiIEy2uUwOsQdyq3FTDQg0",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmaWFuMUBnbWFpbC5jb20iLCJleHAiOjE2MzgzNDM3MjEsImlhdCI6MTYzODMzNjUyMX0.NZ_hwUHVLNkiIMTVnlUp2FoWEA9lXhezNQvbhoIUXyI",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name_list\":[\r\n        \"food/snack\",\r\n        \"drink\",\r\n        \"electronic\",\r\n        \"household_appliance\"\r\n    ]\r\n}",
+					"raw": "    [\r\n        \"food/snack\",\r\n        \"drink\",\r\n        \"electronic\",\r\n        \"household_appliance\"\r\n    ]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -195,13 +195,13 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmaWFuMUBnbWFpbC5jb20iLCJleHAiOjE2MzcwNDQ4MzMsImlhdCI6MTYzNzAzNzYzM30.5z8-0qdTLYmy6PF0asRmEyiIEy2uUwOsQdyq3FTDQg0",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmaWFuMUBnbWFpbC5jb20iLCJleHAiOjE2MzgzNDM3MjEsImlhdCI6MTYzODMzNjUyMX0.NZ_hwUHVLNkiIMTVnlUp2FoWEA9lXhezNQvbhoIUXyI",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"product_list\":[\r\n        {\r\n            \"name\"   :\"kapal_api_special\",\r\n            \"brand\"  :\"kapal_api\",\r\n            \"quantity_in_stock\"  :100,\r\n            \"code\"   :\"KA124GHY\",\r\n            \"net_weight\" :165,\r\n            \"price\"  :14000,\r\n            \"exp_date\"   :\"2022-04-23\",\r\n            \"product_category_id\" :1\r\n        },\r\n        {\r\n            \"name\"   :\"power_fan_maspion\",\r\n            \"brand\"  :\"Maspion\",\r\n            \"quantity_in_stock\"  :35,\r\n            \"code\"   :\"MAT67Y0P\",\r\n            \"product_series\"    :\"PW2001RC\",\r\n            \"size\"  :\"blade(20inch)\",\r\n            \"net_weight\" :9000,\r\n            \"price\"  :650000,\r\n            \"product_category_id\" :3\r\n        },\r\n        {\r\n            \"name\"   :\"coca_cola_zero\",\r\n            \"brand\"  :\"Coca_Cola\",\r\n            \"quantity_in_stock\"  :82,\r\n            \"code\"   :\"CCCY445GH\",\r\n            \"size\"  :\"330ml\",\r\n            \"net_weight\" :480,\r\n            \"price\"  :7000,\r\n            \"exp_date\"   :\"2022-08-11\",\r\n            \"product_category_id\" :2\r\n        },\r\n        {\r\n            \"name\"   :\"big_cans_oreo_selection_biscuit\",\r\n            \"brand\"  :\"Oreo\",\r\n            \"quantity_in_stock\"  :50,\r\n            \"code\"   :\"RRP1352VB\",\r\n            \"net_weight\" :313,\r\n            \"price\"  :38500,\r\n            \"exp_date\"   :\"2023-01-10\",\r\n            \"product_category_id\" :1\r\n        },\r\n        {\r\n            \"name\"   :\"pan\",\r\n            \"brand\"  :\"OUMBÄRLIG\",\r\n            \"quantity_in_stock\"  :76,\r\n            \"code\"   :\"KOP25109H\",\r\n            \"size\"   :\"height(15cm),diameter(23cm)\",\r\n            \"net_weight\" :1230,\r\n            \"price\"  :399000,\r\n            \"product_category_id\" :4\r\n        }\r\n    ]\r\n}",
+					"raw": " [\r\n        {\r\n            \"name\"   :\"kapal_api_special\",\r\n            \"brand\"  :\"kapal_api\",\r\n            \"quantityInStock\"  :100,\r\n            \"code\"   :\"KA124GHY\",\r\n            \"netWeight\" :165,\r\n            \"price\"  :14000,\r\n            \"expDate\"   :\"2022-04-23\",\r\n            \"productCategory\" :{\r\n                \"id\":1\r\n            }\r\n        },\r\n        {\r\n            \"name\"   :\"power_fan_maspion\",\r\n            \"brand\"  :\"Maspion\",\r\n            \"quantityInStock\"  :35,\r\n            \"code\"   :\"MAT67Y0P\",\r\n            \"productSeries\"    :\"PW2001RC\",\r\n            \"size\"  :\"blade(20inch)\",\r\n            \"netWeight\" :9000,\r\n            \"price\"  :650000,\r\n            \"productCategory\" :{\r\n                \"id\":3\r\n            }\r\n        },\r\n        {\r\n            \"name\"   :\"coca_cola_zero\",\r\n            \"brand\"  :\"Coca_Cola\",\r\n            \"quantityInStock\"  :82,\r\n            \"code\"   :\"CCCY445GH\",\r\n            \"size\"  :\"330ml\",\r\n            \"netWeight\" :480,\r\n            \"price\"  :7000,\r\n            \"expDate\"   :\"2022-08-11\",\r\n            \"productCategory\" :{\r\n                \"id\":2\r\n            }\r\n        },\r\n        {\r\n            \"name\"   :\"big_cans_oreo_selection_biscuit\",\r\n            \"brand\"  :\"Oreo\",\r\n            \"quantityInStock\"  :50,\r\n            \"code\"   :\"RRP1352VB\",\r\n            \"netWeight\" :313,\r\n            \"price\"  :38500,\r\n            \"expDate\"   :\"2023-01-10\",\r\n            \"productCategory\" :{\r\n                \"id\":1\r\n            }\r\n        },\r\n        {\r\n            \"name\"   :\"pan\",\r\n            \"brand\"  :\"OUMBÄRLIG\",\r\n            \"quantityInStock\"  :76,\r\n            \"code\"   :\"KOP25109H\",\r\n            \"size\"   :\"height(15cm),diameter(23cm)\",\r\n            \"netWeight\" :1230,\r\n            \"price\"  :399000,\r\n            \"productCategory\" :{\r\n                \"id\":4\r\n            }\r\n        }\r\n    ]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -230,13 +230,13 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmaWFuMUBnbWFpbC5jb20iLCJleHAiOjE2MzcwNDQ4MzMsImlhdCI6MTYzNzAzNzYzM30.5z8-0qdTLYmy6PF0asRmEyiIEy2uUwOsQdyq3FTDQg0",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmaWFuMUBnbWFpbC5jb20iLCJleHAiOjE2MzgzNDM3MjEsImlhdCI6MTYzODMzNjUyMX0.NZ_hwUHVLNkiIMTVnlUp2FoWEA9lXhezNQvbhoIUXyI",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"order_product_list\":[\r\n        {\r\n            \"product_id\":1,\r\n            \"product_quantity\":5\r\n        },\r\n        {\r\n            \"product_id\":4,\r\n            \"product_quantity\":2\r\n        }\r\n    ],\r\n    \"total_price\":147000,\r\n    \"total_quantity\":7\r\n}",
+					"raw": "{\r\n    \"orderProductDetailsList\":[\r\n        {\r\n            \"productQuantity\":6,\r\n            \"product\":{\r\n                \"id\":1\r\n            }\r\n        },\r\n        {\r\n            \"productQuantity\":3,\r\n            \"product\":{\r\n                \"id\":4\r\n            }\r\n        }\r\n    ],\r\n    \"totalPrice\":147000,\r\n    \"totalQuantity\":7\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -266,7 +266,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmaWFuMUBnbWFpbC5jb20iLCJleHAiOjE2MzY5OTg3NTgsImlhdCI6MTYzNjk2Mjc1OH0.pEhFcM1qNdccnlroLvHbNgisSju7fcj-tDosHCumI_Q",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmaWFuMUBnbWFpbC5jb20iLCJleHAiOjE2MzgzNDM3MjEsImlhdCI6MTYzODMzNjUyMX0.NZ_hwUHVLNkiIMTVnlUp2FoWEA9lXhezNQvbhoIUXyI",
 						"type": "text"
 					}
 				],
