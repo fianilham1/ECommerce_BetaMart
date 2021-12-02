@@ -1,0 +1,125 @@
+.row {
+    display: flex;
+    min-height: 30px;
+  }
+  
+  .cell {
+    flex: 4;
+    border-bottom: 1px solid #dddddd;
+    font-family: 'Malgun Gothic';
+    font-size: 17px;
+    font-weight: 530;
+    /* border: 1px solid black; */
+  }
+  
+  .cell.pass{
+    -webkit-text-security: disc;
+  }
+  
+  .cell.header{
+    background-color: #1d212e;
+    color: #ffffff;
+    font-family: 'Malgun Gothic';
+    font-weight: bold;
+    height: 50px;
+    font-size: 19px;
+    border: none;
+    padding-left: 7px;
+    /* margin-bottom: 30px; */
+  }
+  .cell:nth-child(1) {
+    flex: 0.6;
+  }
+  .cell:nth-child(2){
+    flex: 1.5;
+  }
+  .cell:nth-child(3){
+    flex: 1.5;
+  }
+  .cell:nth-child(4){
+    flex: 2;
+  }
+  .cell:nth-child(5){
+    flex: 2;
+  }
+  .cell:nth-child(6){
+    flex: 2;
+  }
+  .cell:nth-child(7){
+    flex: 3;
+  }
+  /* .cell:nth-child(6){
+    flex: 3;
+  } */
+  
+  .cell input{
+    border: 1px solid #dddddd;
+    width: 100%;
+    background: none ;
+  }
+  
+  
+  .row:first-child .cell {
+    display: flex;
+    justify-content: left;         /*  center horiz. */
+    align-items: center;             /*  center vert. */
+  }
+  
+  .row .cell:not(.header){
+    padding: 10px 5px;
+  }
+  s
+  .row:nth-of-type(even){
+    background-color: #f3f3f3;
+  }
+  .row:last-of-type{
+    border-bottom: 3px solid #1d212e;
+  }
+  .row.active-row{
+    font-weight: bold;
+    color: #009879;
+  }
+  
+  .row .cell.action {
+    padding: 10px 0px;
+    padding-right: 10px;
+  }
+
+.action{
+    display: flex;
+  }
+  
+  .action button{
+    /* display: block; */
+      width: 85px;
+      height: 35px; 
+      font-size: 1.05rem;
+    margin: 0 7px;
+    padding: 0px 10px;
+    border: none;
+      /* background-image: linear-gradient(to right,#2c2340,#55437c,#baacda); */
+      cursor: pointer;
+      color: #fff;
+      font-family: 'Poppins',sans-serif;
+      background-size: 200%;
+      transition: .4s;
+    /* margin: 0px 10px; */
+  }
+  
+  .action #editButton{
+    background-color: #0063b2ff ;
+  }
+  
+  .action #detailButton{
+    background-color: #009879 ;
+  }
+  
+  .action #deleteButton{
+    background-color: #e00f0b ;
+  }
+  
+  .action #editButton:hover, .action #detailButton:hover, .action #deleteButton:hover{
+    border: 1px solid #009879;
+    background-color: white;
+    color: #009879;
+  }
