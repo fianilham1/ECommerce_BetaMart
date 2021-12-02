@@ -1,0 +1,21 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "Bank">
+
+    <select id = "checkPayment" parameterType = "String" resultType = "String">
+        SELECT Username FROM PURCHASE WHERE VirtualAccountOfPayment = #{id} LIMIT 1;
+    </select>
+
+    <insert id = "insert" parameterType = "map">
+        INSERT INTO PURCHASE (PurchaseId, Username, TotalPrice, VirtualAccountOfPayment) VALUES (#{1}, #{2}, #{3}, #{4});
+    </insert>
+
+    <resultMap id = "result" type = "main.java.backend.model.PurchaseFlight">
+        <result property = "id" column = "ID"/>
+        <result property = "username" column = "Username"/>
+        <result property = "password" column = "Password"/>
+        <result property = "name" column = "Name"/>
+        <result property = "points" column = "Points"/>
+    </resultMap>
+
+</mapper>

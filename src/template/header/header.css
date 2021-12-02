@@ -1,45 +1,6 @@
-.bg{
-    background: none;
-    width: 100%;
-    height: 130px;
+
+.header-width{
+    max-width: 1000px;
+    padding: 0 10px;
     margin: auto;
-    position: relative;
-    overflow: hidden;
-    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); */
   }
-
-  .bgImg{
-    z-index: -1;
-    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('coffee.jpg');
-    background-position: center;
-    filter: brightness(50%);
-    width: 100%;
-    height: 150px;
-    margin: auto;
-    position: relative;
-    overflow: hidden;
-    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); */
-  }
-
-  /* text header */
-.head1{
-  position: absolute;
-  top: 0;
-  left: 20px;
-  margin: 10px;
-  font-family: 'Malgun Gothic',Malgun Gothic;
-  font-size: 32px;
-  color: white;
-}
-
-.head2{
-  position: absolute;
-  top: 20px;
-  left: 35px;
-  margin: 25px;
-  font-family: 'Malgun Gothic',Malgun Gothic;
-  font-weight: bold;
-  font-size: 40px;
-  color: white;
-}
-

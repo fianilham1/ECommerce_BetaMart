@@ -1,13 +1,3 @@
-# NOTE: untuk MAS WAWAN
-
-List of User is taken from localhost api by using library : npm json server
-
-file db.json is located in src/server/db.json
-
--> To run the server in cmd -> json-server --watch db.json
-
--> then run the react
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -1,0 +1,26 @@
+Button.submitButton{
+    display: block;
+    width: 150px;
+    height: 40px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #0f32a5;
+    /* background-image: linear-gradient(to right,#272f4b,#3d508f,#37436b); */
+    border: none;
+      /* background: none; */
+    cursor: pointer;
+    color: white;
+    text-transform: uppercase;
+    font-family: 'Poppins',sans-serif;
+    background-size: 200%;
+    transition: .4s;
+    padding: 0px;
+    font-size: 20px;
+    justify-content: center;
+  }
+  
+  .submitButton:hover{
+    background-color: #3e5cc2;
+  }
+ 
